@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" />
+
+        
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/leaflet-master.css" />
+        <link rel="stylesheet" media="all" type="text/css" href="css/wellstreet.css" />
+       
+        <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+        <script type="text/javascript" src="js/leaflet-master.js"></script>
+
+        <title>WellStreet</title>
+    </head>
+
+    <body>       
+        <div id="nav" class="wellstreet-header">
+          <div class="regular-header clearfix">
+            <div class="header-box stay-left">
+              <a href="" class="link-btn" >WellStreet</a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Log In
+              </a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Sign Up
+              </a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Help
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div class="slide" style="height:600px;">
+        </div>
+
+        <section class="panel">
+          <div class="discover-section responsive-container">
+            <div class="section-title text-center">
+              <h2>Discover Nearby</h2>
+              <p>See what you can find around your location</p>
+            </div>
+            <div class="discover-tiles" id="discover-nearby">
+              <div class="row text-center">
+                <button onclick="findNearby(this)">Find</button>
+              </div>
+              <div class="row">
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="panel">
+          <div class="discover-section responsive-container">
+            <div class="section-title text-center">
+              <h2>Discover Dublin</h2>
+              <p>See what you can find in your city</p>
+            </div>
+            <div id="discover-city" class="discover-tiles">
+              <div class="row">
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+         <script type="text/javascript" src="js/json_array.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+          loadDiscoverCategory();
+        });
+
+        function loadDataArray(){
+          var len = acupuncturist_array.length;
+          var $list = $(".result-container .row");
+          for(var i = 0; i< len;i++){
+            var $div = '<div class="result-item col-sm-12 row-space col-md-6"><div data-lng="'+acupuncturist_array[i]["Longitude"]+'" data-lat="'+acupuncturist_array[i]["Latitude"]+'"><div class="panel-img"></div><div class="panel-body"><p title="'+acupuncturist_array[i]["Name"]+'" class="text-truncate"><a href="" class="text-truncate">'+acupuncturist_array[i]["Name"]+'</a></p><p class=".text-truncate"><a href="" class="text-truncate">'+acupuncturist_array[i]["City"]+'</a></p></div></div></div>';
+            $list.append($div);
+          }
+        }
+
+        // function loadDiscoverCategory () {
+        //   console.time('loadDiscoverCategory');
+        //   var $discover_list = $(".discover-tiles .row");
+        //   var len = $discover_list.children().length;
+        //   console.log($discover_list.children());
+
+          
+        //   $discover_list.children().each(function(){
+        //     var index = ($discover_list.children('div')).index($(this));
+        //     var name = acupuncturist_array[index]["Name"];
+        //     $(this).find(".va-container .va-middle h3").text(name);
+        //   });
+        //   console.timeEnd('loadDiscoverCategory');
+        // }
+
+        function loadDiscoverCategory(){
+          console.time('loadDiscoverCategory');
+          var discover_list = document.getElementById("discover-city");
+          var row = discover_list.childNodes[1];
+          var len = 9;
+          for(var i=0;i<len;i++){
+            var d = document.createElement("div");
+            var link = document.createElement("a");
+            var box  = document.createElement("div");
+            var box_va = document.createElement("div");
+            var box_content = document.createElement("div");
+            var title = document.createElement("h3");
+            
+
+            d.className = "col-lg-4 col-md-6 col-sm-12";
+            box.className = "discover-box";
+            box_va.className = "va-container va-container-v va-container-h";
+            box_content.className = "va-middle text-center";
+            title.innerHTML = acupuncturist_array[i]["Name"];
+            
+            box_content.appendChild(title);
+            box_va.appendChild(box_content);
+            box.appendChild(box_va);
+            link.appendChild(box);
+            d.appendChild(link);
+            row.appendChild(d);
+          }
+
+          console.timeEnd('loadDiscoverCategory');
+        }
+
+        function findNearby(btn){
+          console.time('findNearby');
+          var button = btn;
+          var discover_list = document.getElementById("discover-nearby");
+          var row = discover_list.childNodes[1];
+
+          var len = 6;
+          for(var i=0;i<len;i++){
+            var d = document.createElement("div");
+            var link = document.createElement("a");
+            var box  = document.createElement("div");
+            var box_va = document.createElement("div");
+            var box_content = document.createElement("div");
+            var title = document.createElement("h3");
+            
+            d.className = "col-lg-4 col-md-6 col-sm-12";
+            box.className = "discover-box";
+            box_va.className = "va-container va-container-v va-container-h";
+            box_content.className = "va-middle text-center";
+            title.innerHTML = acupuncturist_array[i]["Name"];
+
+            box_content.appendChild(title);
+            box_va.appendChild(box_content);
+            box.appendChild(box_va);
+            link.appendChild(box);
+            d.appendChild(link);
+            row.appendChild(d);
+          } 
+          button.style.display = "none";
+          console.timeEnd('findNearby');
+        }
+
+        function findMissedElements(array){
+          var arr = [];
+          arr.length = array.length+2;
+          console.log(arr);
+          
+          var missing = "";
+          for(var i=1;i<array.length;i++){
+            arr[array[i-1]] = "true";
+          }
+          console.log(arr);
+          var j = 0;
+          while(j<arr.length){
+            if( arr[j] != "true"){
+            }
+            j++;
+          }
+          
+        }
+        </script>
+    </body>
+</html>

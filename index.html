@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" />
+
+        
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="css/wellstreet.css" />
+        <link rel="stylesheet" type="text/css" href="css/leaflet-master.css" />
+       
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+        <script type="text/javascript" src="js/leaflet-master.js"></script>
+        <script src="js/h5utils.js"></script>
+        
+      
+        <title>WellStreet</title>
+    </head>
+
+    <body>       
+        <div id="nav" class="wellstreet-header">
+          <div class="regular-header clearfix">
+            <div class="header-box stay-left">
+              <a href="" class="link-btn" >WellStreet</a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Log In
+              </a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Sign Up
+              </a>
+            </div>
+            <div class="header-box stay-right">
+              <a href="" class="link-btn">
+                Help
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div class="slider">
+        </div>
+        <div class="map-search animated">
+          <div class="map-wrap">
+            <div id="map"></div>
+          </div>
+          <div class="result-wrap">
+            <div class="filter-container">
+            </div>
+            <div class="search-results row-space">
+              <div class="result-list">
+                <div class="result-container">
+                  <div class="row">
+                  </div>
+                </div>
+              </div>
+              <div class="result-footer">
+              </div>
+            </div>
+          </div>
+          
+         </div>
+         <script type="text/javascript" src="js/json_array.js"></script>
+         <script type="text/javascript" src="js/wellstreet_global.js"></script>
+         <script type="text/javascript" src="js/wellstreet_map.js"></script>
+         <script type="text/javascript" src="js/modal_test.js"></script>
+<script>
+//get the city and gross geolocation based on the IP address
+//while the geolocation is not that accurate
+         var myip;
+function callback(data) {
+    console.log("current city:"+data.city);
+    console.log("current langitude:"+data.lat);
+    console.log("current Longitude:"+data.lon);
+    CurrentLocation = [data.lat, data.lon];
+    // var DivIcon =new WSDivIcon({html: "location"});
+    // var CurrentLocationMarker = L.WSMarker(CurrentLocation,{icon: WSDivIcon});//.
+    // CurrentLocation_array.push(CurrentLocationMarker);
+    // var CurrentLocationLayer = L.layerGroup(CurrentLocation_array).addTo($map);
+    L.marker(CurrentLocation).addTo($map)
+    .bindPopup('location')
+    .openPopup();
+
+    
+}
+function request_location() {
+    var oHead = document.getElementsByTagName('head')[0];
+    var oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.src = "http://ip-api.com/json/" + myip + "?callback=callback";
+    oHead.appendChild(oScript);
+}
+</script>
+<script type="text/javascript" src="http://l2.io/ip.js?var=myip" onload="request_location();"></script>
+        <script type="text/javascript">
+        window.onload = function(){
+          initialMap();
+          addLayer("acupuncturist");
+
+          var geo_options = {
+            timeout:10000,
+            enableHighAccuracy: true, 
+            maximumAge        : 30000, 
+          }
+          navigator.geolocation.getCurrentPosition(showPosition,error,geo_options);
+        };
+
+        function showPosition(position){
+          console.log("location:"+position.coords.latitude+" , "+ position.coords.longitude);
+          console.log("success");
+          var location = [position.coords.latitude, position.coords.longitude];
+    // var DivIcon =new WSDivIcon({html: "location"});
+    // var CurrentLocationMarker = L.WSMarker(CurrentLocation,{icon: WSDivIcon});//.
+    // CurrentLocation_array.push(CurrentLocationMarker);
+    // var CurrentLocationLayer = L.layerGroup(CurrentLocation_array).addTo($map);
+    L.marker(location).addTo($map)
+    .bindPopup('location')
+    .openPopup();
+        }
+
+        function error(position) {
+          console.log("failed");
+        }
+
+        // function loadDataArray(){
+        //   console.time("loadDataArray");
+        //   var len = acupuncturist_array.length;
+        //   var $list = $(".result-container .row");
+        //   for(var i = 0; i< len;i++){
+
+        //     var $div = '<div class="result-item col-sm-12 row-space col-md-6"><div data-lng="'+acupuncturist_array[i]["Longitude"]+'" data-lat="'+acupuncturist_array[i]["Latitude"]+'"><div class="panel-img"></div><div class="panel-body"><p title="'+acupuncturist_array[i]["Name"]+'" class="text-truncate"><a href="" class="text-truncate">'+acupuncturist_array[i]["Name"]+'</a></p><p class="text-truncate"><a href="" class="text-truncate">'+acupuncturist_array[i]["City"]+'</a></p></div></div></div>';
+        //     $list.append($div);
+        //   }
+        //   console.timeEnd("loadDataArray");
+        // }
+
+        function loadDataArray2(){
+          console.time('loadDataArray2');
+          var len = acupuncturist_array.length;
+          var list = document.getElementsByClassName("result-container")[0];
+
+          for(var i =0, l=list.childNodes.length;i<len;i++){
+            if(list.childNodes[i].className === 'row'){
+              var row = list.childNodes[i];
+              break;
+            }
+          }
+          console.log(row);
+
+          for(var i=0;i<len;i++){
+            var d = document.createElement("div");
+            var LD = document.createElement("div");
+            var panelImg = document.createElement("div");
+            var panelBody = document.createElement("div");
+            var title1 = document.createElement("p");
+            var link1 = document.createElement("a");
+            var title2 = document.createElement("p");
+            var link2 = document.createElement("a");
+            
+            d.className = "result-item col-sm-12 row-space col-md-6";
+            LD.dataset.lng = acupuncturist_array[i]["Longitude"];
+            LD.dataset.lat = acupuncturist_array[i]["Latitude"];
+            panelImg.className = "panel-img";
+            panelBody.className = "panel-body";
+            title1.title = acupuncturist_array[i]["Name"];
+            title1.className = "text-truncate";
+            link1.className = "text-truncate";
+            title2.className = "text-truncate";
+            link2.className = "text-truncate";
+
+            link1.innerHTML = acupuncturist_array[i]["Name"];
+            title1.appendChild(link1);
+            panelBody.appendChild(title1);
+
+            link2.innerHTML = acupuncturist_array[i]["City"];
+            title2.appendChild(link2);
+            panelBody.appendChild(title2);
+
+            LD.appendChild(panelImg);
+            LD.appendChild(panelBody);
+            d.appendChild(LD);
+            row.appendChild(d);
+          }
+          console.timeEnd("loadDataArray2");
+        }
+        
+          // } else {
+          //   console.log("not supported");
+          //   error('not supported');
+          // }
+          function updateList(array){
+           
+            console.time("updateList");
+            var len = array.length;
+            var list = document.getElementsByClassName("result-container")[0];
+            list.classList.add("loading");
+            for(var i =0, l=list.childNodes.length;i<l;i++){
+              if(list.childNodes[i].className === 'row'){
+                var row = list.childNodes[i];
+                break;
+              }
+            }
+           
+            if(row.childNodes.length > 0){
+               console.log(row.childNodes.length);
+              while(row.firstChild){
+                row.removeChild(row.firstChild);
+              }
+            }
+            if(len === 0){
+              var p = document.createElement("p");
+              p.innerHTML = "Sorry there is 0 result";
+              row.appendChild(p);
+            }
+            else{
+            for(var i=0;i<len;i++){
+                var d = document.createElement("div");
+                var LD = document.createElement("div");
+                var panelImg = document.createElement("div");
+                var panelBody = document.createElement("div");
+                var title1 = document.createElement("p");
+                var link1 = document.createElement("a");
+                var title2 = document.createElement("p");
+                var link2 = document.createElement("a");
+            
+                d.className = "result-item col-sm-12 row-space col-md-6";
+                LD.dataset.lng = acupuncturist_array[i]["Longitude"];
+                LD.dataset.lat = acupuncturist_array[i]["Latitude"];
+                panelImg.className = "panel-img";
+                panelBody.className = "panel-body";
+                title1.title = acupuncturist_array[i]["Name"];
+                title1.className = "text-truncate";
+                link1.className = "text-truncate";
+                title2.className = "text-truncate";
+                link2.className = "text-truncate";
+
+                link1.innerHTML = acupuncturist_array[i]["Name"];
+                title1.appendChild(link1);
+                panelBody.appendChild(title1);
+
+                link2.innerHTML = acupuncturist_array[i]["City"];
+                title2.appendChild(link2);
+                panelBody.appendChild(title2);
+
+                LD.appendChild(panelImg);
+                LD.appendChild(panelBody);
+                d.appendChild(LD);
+                row.appendChild(d);
+              }
+            }
+
+            list.classList.remove("loading");
+            console.timeEnd("updateList");
+
+            }
+
+        </script>
+    </body>
+</html>

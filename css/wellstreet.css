@@ -1,0 +1,249 @@
+html, body {
+  padding: 0;
+  margin: 0; }
+
+.clearfix {
+  clear: both; }
+
+.clearfix:before, .clearfix:after, .row:before, .row:after {
+  content: "";
+  display: table; }
+
+a {
+  color: #000000;
+  text-decoration: none; }
+  a:hover {
+    color: #000000;
+    text-decoration: none; }
+
+/**,*:before,*:after,input:before,input:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+*/
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
+
+.text-truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+
+.va-container {
+  display: table;
+  position: relative; }
+
+.va-container-v {
+  height: 100%; }
+
+.va-container-h {
+  width: 100%; }
+
+.va-middle {
+  display: table-cell;
+  vertical-align: middle; }
+
+.responsive-container {
+  margin: 0 auto;
+  margin-bottom: 30px; }
+
+.row-space {
+  padding: 0 20px;
+  margin-bottom: 20px; }
+
+/*DivIcon*/
+.leaflet-div-icon {
+  background: transparent;
+  border: none; }
+
+.leaflet-marker-icon .number {
+  position: relative;
+  top: -37px;
+  font-size: 12px;
+  width: 25px;
+  text-align: center; }
+
+div.my-divIcon {
+  text-align: center;
+  color: #FFF;
+  padding: 5px 0px;
+  border-radius: 6px;
+  margin-left: -50px;
+  font-size: 1.2em;
+  line-height: 1.4em;
+  background-color: rgba(0, 207, 193, 0.9); }
+  div.my-divIcon.active {
+    background-color: rgba(249, 86, 79, 0.9); }
+    div.my-divIcon.active:after {
+      border-top: solid 8px rgba(249, 86, 79, 0.9);
+      border-left: solid 10px transparent;
+      border-right: solid 10px transparent; }
+  div.my-divIcon.viewed {
+    background-color: rgba(200, 200, 200, 0.9); }
+    div.my-divIcon.viewed:after {
+      border-top: solid 8px rgba(200, 200, 200, 0.9);
+      border-left: solid 10px transparent;
+      border-right: solid 10px transparent; }
+  div.my-divIcon:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    margin-left: 20px;
+    width: 0;
+    height: 0;
+    border-top: solid 8px rgba(0, 207, 193, 0.9);
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent; }
+
+div.current-location-icon {
+  border: 2px solid #d7d7d7;
+  background-color: rgba(249, 86, 79, 0.9);
+  border-radius: 50%;
+  z-index: 350; }
+  div.current-location-icon:after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 0%;
+    margin-left: 4px;
+    width: 0;
+    height: 0;
+    border-top: solid 18px rgba(249, 86, 79, 0.9);
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent; }
+
+.wellstreet-header {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1000;
+  background-color: transparent;
+  width: 100%;
+  border: none; }
+  .wellstreet-header .regular-header {
+    height: 60px;
+    display: block; }
+    .wellstreet-header .regular-header .header-box {
+      height: 60px;
+      line-height: 60px;
+      position: relative; }
+      .wellstreet-header .regular-header .header-box .link-btn {
+        /*color: #FFFFFF;*/
+        display: block;
+        padding: 0 18px; }
+    .wellstreet-header .regular-header .stay-left {
+      float: left; }
+    .wellstreet-header .regular-header .stay-right {
+      float: right; }
+
+.map-search {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #FFFFFF; }
+  .map-search .result-wrap {
+    width: 55%;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+    .map-search .result-wrap .loading {
+      height: 100%;
+      width: 100%; }
+      .map-search .result-wrap .loading:after {
+        background-color: rgba(245, 245, 245, 0.8);
+        z-index: 100;
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: " "; }
+    .map-search .result-wrap .result-list {
+      padding: 0 10px; }
+      .map-search .result-wrap .result-list .result-item {
+        min-height: 250px;
+        border: 1px solid #f0f0f0;
+        position: relative; }
+        .map-search .result-wrap .result-list .result-item .panel-img {
+          padding-bottom: 67%; }
+        .map-search .result-wrap .result-list .result-item .panel-body {
+          padding: 0 10px; }
+      .map-search .result-wrap .result-list .row-space {
+        padding: 0 10px;
+        margin-bottom: 10px; }
+  .map-search .map-wrap {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 45%; }
+    .map-search .map-wrap #map {
+      width: 100%;
+      height: 100%; }
+
+.discover-tiles .discover-box {
+  height: 280px;
+  margin-bottom: 30px;
+  border: 1px solid #f0f0f0; }
+
+@media (max-width: 767px) {
+  .responsive-container {
+    width: auto; } }
+@media (min-width: 768px) {
+  .responsive-container {
+    width: 745px; } }
+@media (min-width: 1100px) {
+  .responsive-container {
+    width: 1045px; } }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: rgba(242, 242, 242, 0.8);
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
+  -webkit-transition: 0.2s all ease;
+  -moz-transition: 0.2s all ease;
+  -ms-transition: 0.2s all ease;
+  -o-transition: 0.2s all ease;
+  transition: 0.2s all ease; }
+  .modal-overlay.modal-open {
+    opacity: 1;
+    display: block; }
+
+.modal-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 680px;
+  border: 1px solid #f0f0f0;
+  opacity: 0;
+  -webkit-transition: 0.2s all ease;
+  -moz-transition: 0.2s all ease;
+  -ms-transition: 0.2s all ease;
+  -o-transition: 0.2s all ease;
+  transition: 0.2s all ease; }
+  .modal-body.modal-open {
+    opacity: 1;
+    display: block; }
+
+/*# sourceMappingURL=wellstreet.css.map */
